@@ -23,13 +23,17 @@
 
 #     return [text for _, text in scores[:top_k]]
 
-from app.services.vector_db import collection
+from app.services.vector_db import rag_collection
 
 def retrieve_similar_chunks(query, top_k=3):
-    results = collection.query(
+    results = rag_collection.query(
         query_texts=[query],
         n_results=top_k
     )
 
-    return results["documents"][0] if results["documents"] else []
+    if not results["documents"]:
+        return []
+
+    return results["documents"][0]
+
 

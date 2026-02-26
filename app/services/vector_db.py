@@ -1,16 +1,40 @@
+# app/services/vector_db.py
+
 import chromadb
 from chromadb.utils import embedding_functions
 
-# Persistent DB (saved to disk)
+
+# =====================================================
+# Persistent Chroma Client
+# =====================================================
+
 client = chromadb.PersistentClient(path="./chroma_db")
 
-# Use sentence-transformer embeddings
-sentence_transformer_ef = embedding_functions.SentenceTransformerEmbeddingFunction(
+
+# =====================================================
+# Embedding Function (IMPORTANT)
+# =====================================================
+
+embedding_function = embedding_functions.SentenceTransformerEmbeddingFunction(
     model_name="all-MiniLM-L6-v2"
 )
 
 
-collection = client.get_or_create_collection(
-    name="documents",
-    embedding_function=sentence_transformer_ef
+# =====================================================
+# RAG Collection
+# =====================================================
+
+rag_collection = client.get_or_create_collection(
+    name="derma_rag",
+    embedding_function=embedding_function
+)
+
+
+# =====================================================
+# Memory Collection
+# =====================================================
+
+memory_collection = client.get_or_create_collection(
+    name="chat_memory",
+    embedding_function=embedding_function
 )

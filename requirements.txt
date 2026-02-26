@@ -9,6 +9,7 @@ faiss-cpu
 
 streamlit
 requests
+uuid
 
 python-multipart
 python-dotenv
@@ -19,3 +20,11 @@ numpy
 chromadb==0.5.5
 pydantic==2.7.4
 pydantic-settings==2.3.4
+
+langgraph
+langchain-core
+
+torch
+pillow
+transformers
+git+https://github.com/openai/CLIP.git
