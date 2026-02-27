@@ -1,18 +1,32 @@
 import pandas as pd
 from app.services.embedding_service import embed_and_store
+import os
 
-df = pd.read_csv("data/skincare_data.csv")
 
-df["combined"] = (
-    "Ingredient: " + df["Ingredient Name"] +
-    ". Function: " + df["Function"] +
-    ". Safety: " + df["Safety Rating"].astype(str) +
-    ". Description: " + df["Brief Description"]
-)
+def run_ingestion():
 
-texts = df["combined"].tolist()
+    if os.path.exists("chroma_db"):
+        print("Chroma DB already exists. Skipping ingestion.")
+        return   
 
-embed_and_store(texts)
+    print("Loading skincare dataset...")
 
-print("✅ Data ingested")
+    df = pd.read_csv("data/skincare_data.csv")
 
+    df["combined"] = (
+        "Ingredient: " + df["Ingredient Name"] +
+        ". Function: " + df["Function"] +
+        ". Safety: " + df["Safety Rating"].astype(str) +
+        ". Description: " + df["Brief Description"]
+    )
+
+    texts = df["combined"].tolist()
+
+    print(f"Embedding {len(texts)} records...")
+    embed_and_store(texts)
+
+    print("✅ Data ingestion completed.")
+
+
+if __name__ == "__main__":
+    run_ingestion()

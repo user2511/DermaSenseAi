@@ -1,20 +1,17 @@
-
 from app.services.vector_db import rag_collection
-from app.services.vector_db import memory_collection
 import uuid
 
+
 def embed_and_store(text_chunks):
-    ids = []
-    
-    for chunk in text_chunks:
-        ids.append(str(uuid.uuid4()))
+
+    ids = [str(uuid.uuid4()) for _ in text_chunks]
+
+    metadata = [{"source": "skincare_dataset"} for _ in text_chunks]
 
     rag_collection.add(
         documents=text_chunks,
-        ids=ids
+        ids=ids,
+        metadatas=metadata
     )
 
-    
-
     return len(text_chunks)
-
