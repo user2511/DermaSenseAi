@@ -5,17 +5,16 @@ langchain
 langchain-community
 
 sentence-transformers
-faiss-cpu
 
-streamlit
+
 requests
-uuid
+
 
 python-multipart
 python-dotenv
-datasets
-pandas
-numpy
+
+
+
 
 chromadb==0.5.5
 pydantic==2.7.4

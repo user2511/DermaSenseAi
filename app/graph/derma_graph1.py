@@ -41,7 +41,7 @@ class DermaState(TypedDict, total=False):
 # =====================================================
 
 llm = Ollama(
-    model="mistral",
+    model="tinyllama",
     temperature=0.2,
     num_predict=300
 )

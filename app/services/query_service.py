@@ -5,7 +5,9 @@ from langchain_community.llms import Ollama
 # -----------------------------
 # LLM
 # -----------------------------
-llm = Ollama(model="mistral")
+PRECOMPUTE_MODE = False
+
+llm = Ollama(model="tinyllama")
 
 
 # -----------------------------
@@ -168,6 +170,8 @@ def build_grounded_query(
         grounded_query (str),
         final_dependency (str)
     """
+    if PRECOMPUTE_MODE:
+        return question, "fully-dependent"
 
     # If no image → automatically independent
     if not image_summary:
