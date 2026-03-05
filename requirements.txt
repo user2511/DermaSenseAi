@@ -4,3 +4,4 @@ pillow
 imagehash
 scikit-learn
 langchain-community
+python-multipart
