@@ -1,35 +1,49 @@
-print("MAIN APP LOADED")
+from fastapi import FastAPI, UploadFile, File, Form
+from fastapi.responses import StreamingResponse
+from services.inference_service import generate_response
+from PIL import Image
+import io
 
-from dotenv import load_dotenv
-load_dotenv()
+app = FastAPI()
 
-from fastapi import FastAPI
-from app.routes.ask import router as ask_router
-from app.services.memory_service import init_db
-import logging
-
-logging.basicConfig(
-    level=logging.INFO,
-    format="%(asctime)s - %(levelname)s - %(message)s"
-)
-
-app = FastAPI(
-    title="DermaSense AI",
-    version="1.0.0"
-)
-
-@app.on_event("startup")
-def startup_event():
-    print("Initializing SQLite database...")
-    init_db()
-    print("Database ready.")
-
-    print("Running data ingestion...")
-    from ingest_data import run_ingestion
-    run_ingestion()
-
-app.include_router(ask_router, prefix="/api")
 
 @app.get("/")
-def health():
-    return {"status": "ok"}
+def root():
+    return {"message": "DermaSense AI Demo Running"}
+
+
+@app.post("/ask")
+async def ask(
+    question: str = Form(...),
+    image: UploadFile = File(...)
+):
+
+    image_path = f"/tmp/{image.filename}"
+
+    with open(image_path, "wb") as f:
+        f.write(await image.read())
+
+    answer = generate_response(image_path, question)
+
+    return {"answer": answer}
+
+
+@app.post("/ask-stream")
+async def ask_stream(
+    question: str = Form(...),
+    image: UploadFile = File(...)
+):
+
+    image_bytes = await image.read()
+
+    uploaded_image = Image.open(io.BytesIO(image_bytes)).convert("RGB")
+
+    async def event_generator():
+
+        async for token in generate_response(uploaded_image, question):
+            yield token
+
+    return StreamingResponse(
+        event_generator(),
+        media_type="text/plain"
+    )
