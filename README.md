@@ -1,42 +1,124 @@
-
-# DermaSenseAi
-DermaSense AI
+🧴 DermaSense AI
 Multimodal Dermatology Assistant using Computer Vision + RAG + LLMs
 
-
 DermaSense AI is a multimodal AI system for skin analysis and skincare question answering.
-It combines computer vision, retrieval augmented generation (RAG), memory systems, and large language models to analyze skin images and generate contextual dermatology responses.
+It combines computer vision, Retrieval Augmented Generation (RAG), memory systems, and large language models to analyze skin images and generate contextual dermatology responses.
 
 Users can upload a skin image and ask a question, and the system uses AI models and knowledge retrieval to generate a relevant answer.
 
 🚀 Live Demo
 API Endpoint
 https://dermasenseai-4.onrender.com
-Swagger API Docs
+Swagger API Documentation
 https://dermasenseai-4.onrender.com/docs
 
 You can test the API directly using Swagger UI.
 
 🧠 Key Features
 
-• Skin image analysis
-• Multimodal AI (Image + Text reasoning)
-• Retrieval Augmented Generation (RAG)
-• Vector similarity search
-• Memory system for repeated queries
-• LangGraph agent workflow orchestration
-• Streaming LLM responses
-• Lightweight deployment architecture
+Skin image analysis
+
+Multimodal AI (Image + Text reasoning)
+
+Retrieval Augmented Generation (RAG)
+
+Vector similarity search
+
+Memory system for repeated queries
+
+LangGraph agent workflow orchestration
+
+Streaming LLM responses
+
+Lightweight deployment architecture
 
 🏗 System Architecture
+User Image + Query
+        │
+        ▼
+   FastAPI Backend
+        │
+        ▼
+  Vision Service
+        │
+        ▼
+Image Analysis
+        │
+        ▼
+Query Dependency Detection
+        │
+        ▼
+   Query Builder
+        │
+ ┌──────┴────────┐
+ ▼               ▼
+Memory        RAG Retrieval
+Retrieval
+ └──────┬────────┘
+        ▼
+ Context Aggregation
+        │
+        ▼
+    LLM Service
+        │
+        ▼
+ Generated Response
+        │
+        ▼
+  Memory Storage
 🔗 LangGraph Agent Workflow
 
 The system pipeline was implemented using LangGraph, enabling modular AI workflow orchestration.
 
+Vision Node
+     │
+     ▼
+Query Builder Node
+     │
+     ▼
+Parallel Retrieval
+   │        │
+   ▼        ▼
+Memory     RAG
+Retrieval  Retrieval
+   │        │
+   └───▼────┘
+   Context Merge
+        │
+        ▼
+   LLM Generation
+        │
+        ▼
+  Response Streaming
+        │
+        ▼
+  Memory Storage
 🚀 Lightweight Deployment Architecture
 
 Due to heavy model dependencies, a precomputed inference architecture was used for the deployed demo.
 
+User Image + Query
+        │
+        ▼
+Generate Image pHash
+        │
+        ▼
+Compare With Stored Hashes
+        │
+        ▼
+Find Closest Image Match
+        │
+        ▼
+Retrieve Precomputed Results
+        │
+        ▼
+Retrieve Conversation History
+        │
+        ▼
+LLM Generates Final Response
+        │
+        ▼
+Return Response
 🧩 Project Structure
 DermaSenseAi/
 │
@@ -68,31 +150,39 @@ DermaSenseAi/
 🧠 Technologies Used
 Backend
 
-• Python
-• FastAPI
+Python
+
+FastAPI
 
 AI / ML
 
-• LangChain
-• LangGraph
-• CLIP
-• BLIP
-• Sentence Transformers
+LangChain
+
+LangGraph
+
+CLIP
+
+BLIP
+
+Sentence Transformers
 
 Retrieval Systems
 
-• Vector embeddings
-• Cosine similarity search
+Vector embeddings
+
+Cosine similarity search
 
 LLM Integration
 
-• Ollama
-• Prompt engineering
+Ollama
+
+Prompt engineering
 
 Deployment
 
-• Streamlit
-• Render
+Streamlit
+
+Render
 
 📊 Project Evolution
 Phase 1 — Basic LLM System
@@ -111,8 +201,9 @@ Image understanding was introduced using vision models.
 
 Vision models used:
 
-• BLIP
-• CLIP
+BLIP
+
+CLIP
 
 Pipeline:
 
@@ -126,7 +217,6 @@ A Query Service determines whether the question should include image analysis.
 Example:
 
 "What skin condition is this?" → Image dependent
-
 "What moisturizer helps acne?" → Not image dependent
 
 Scoring mechanism:
@@ -152,11 +242,15 @@ As the system grew complex, the pipeline was redesigned using LangGraph.
 
 Graph nodes include:
 
-• Vision node
-• Query builder
-• Memory retrieval
-• RAG retrieval
-• LLM generation
+Vision node
+
+Query builder
+
+Memory retrieval
+
+RAG retrieval
+
+LLM generation
 
 This enabled parallel retrieval and modular orchestration.
 
@@ -185,39 +279,40 @@ Phase 9 — Demo Deployment
 The deployed version uses pHash image similarity to match user images with stored dermatology examples.
 
 User Image
-↓
+   ↓
 Generate pHash
-↓
+   ↓
 Compare With Stored Hashes
-↓
+   ↓
 Find Closest Match
-↓
+   ↓
 Retrieve Stored Results
-↓
+   ↓
 LLM Generates Final Response
 ⚠ Limitations
 
-• Small dermatology dataset
-• pHash similarity has limited visual accuracy
-• Demo architecture optimized for deployment constraints
+Small dermatology dataset
+
+pHash similarity has limited visual accuracy
+
+Demo architecture optimized for deployment constraints
 
 🔮 Future Improvements
-
-Possible improvements include:
-
 Better Image Similarity
 
 Replace pHash with:
 
-• CLIP image embeddings
+CLIP image embeddings
 
 Vector Database for Images
 
 Use:
 
-• FAISS
-• Weaviate
-• Chroma
+FAISS
+
+Weaviate
+
+Chroma
 
 Larger Dermatology Knowledge Base
 
@@ -227,29 +322,27 @@ Full Multimodal Pipeline Deployment
 
 Deploy using scalable infrastructure such as:
 
-• GPU servers
-• Kubernetes
-• serverless AI APIs
+GPU servers
+
+Kubernetes
+
+serverless AI APIs
 
 Production UI
 
 Build a frontend using:
 
-• React
-• Next.js
+React
+
+Next.js
 
 🧑‍💻 Installation
-
-Clone repository
-
+Clone Repository
 git clone https://github.com/yourusername/DermaSenseAi.git
 cd DermaSenseAi
-
-Create virtual environment
-
+Create Virtual Environment
 python -m venv venv
-
-Activate environment
+Activate Environment
 
 Windows
 
@@ -258,13 +351,9 @@ venv\Scripts\activate
 Linux / Mac
 
 source venv/bin/activate
-
-Install dependencies
-
+Install Dependencies
 pip install -r requirements.txt
-
-Run FastAPI server
-
+Run FastAPI Server
 uvicorn main:app --reload
 📌 Branch Overview
 main
@@ -279,15 +368,22 @@ Lightweight deployed demo
 
 This project explores advanced AI engineering concepts:
 
-• Multimodal AI systems
-• Retrieval Augmented Generation
-• Vector similarity search
-• Agent workflows with LangGraph
-• Memory systems for LLM applications
-• Efficient deployment strategies for ML systems
+Multimodal AI systems
+
+Retrieval Augmented Generation
+
+Vector similarity search
+
+Agent workflows with LangGraph
+
+Memory systems for LLM applications
+
+Efficient deployment strategies for ML systems
 
 🤝 Contributions
 
 Contributions and improvements are welcome.
 
+📜 License
 
+MIT License
