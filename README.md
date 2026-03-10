@@ -1,4 +1,5 @@
 🧴 DermaSense AI
+
 Multimodal Dermatology Assistant using Computer Vision + RAG + LLMs
 
 DermaSense AI is a multimodal AI system for skin analysis and skincare question answering.
@@ -8,8 +9,11 @@ Users can upload a skin image and ask a question, and the system uses AI models 
 
 🚀 Live Demo
 API Endpoint
+
 https://dermasenseai-4.onrender.com
+
 Swagger API Documentation
+
 https://dermasenseai-4.onrender.com/docs
 
 You can test the API directly using Swagger UI.
@@ -33,168 +37,41 @@ Streaming LLM responses
 Lightweight deployment architecture
 
 🏗 System Architecture
-User Image + Query
-        │
-        ▼
-   FastAPI Backend
-        │
-        ▼
-  Vision Service
-        │
-        ▼
-Image Analysis
-        │
-        ▼
-Query Dependency Detection
-        │
-        ▼
-   Query Builder
-        │
- ┌──────┴────────┐
- ▼               ▼
-Memory        RAG Retrieval
-Retrieval
- └──────┬────────┘
-        ▼
- Context Aggregation
-        │
-        ▼
-    LLM Service
-        │
-        ▼
- Generated Response
-        │
-        ▼
-  Memory Storage
+
+<img width="1035" height="800" alt="mermaid-diagram" src="https://github.com/user-attachments/assets/c91fc2f4-4365-4151-8b4a-2accfe4fbd8a" />
+
 🔗 LangGraph Agent Workflow
 
-The system pipeline was implemented using LangGraph, enabling modular AI workflow orchestration.
+<img width="3563" height="376" alt="mermaid-diagram (1)" src="https://github.com/user-attachments/assets/628021ae-eec2-4511-aa0e-0baeb29b03de" />
 
-Vision Node
-     │
-     ▼
-Query Builder Node
-     │
-     ▼
-Parallel Retrieval
-   │        │
-   ▼        ▼
-Memory     RAG
-Retrieval  Retrieval
-   │        │
-   └───▼────┘
-   Context Merge
-        │
-        ▼
-   LLM Generation
-        │
-        ▼
-  Response Streaming
-        │
-        ▼
-  Memory Storage
+  
 🚀 Lightweight Deployment Architecture
 
-Due to heavy model dependencies, a precomputed inference architecture was used for the deployed demo.
+<img width="516" height="800" alt="mermaid-diagram (2)" src="https://github.com/user-attachments/assets/e409a08a-2134-472c-a847-d2d313e42928" />
 
-User Image + Query
-        │
-        ▼
-Generate Image pHash
-        │
-        ▼
-Compare With Stored Hashes
-        │
-        ▼
-Find Closest Image Match
-        │
-        ▼
-Retrieve Precomputed Results
-        │
-        ▼
-Retrieve Conversation History
-        │
-        ▼
-LLM Generates Final Response
-        │
-        ▼
-Return Response
+
 🧩 Project Structure
-DermaSenseAi/
-│
-├── app/
-│
-├── main.py
-│
-├── routes/
-│   └── ask_router.py
-│
-├── services/
-│   ├── llm_service.py
-│   ├── rag_service.py
-│   ├── embedding_service.py
-│   ├── retrieval_service.py
-│   ├── memory_service.py
-│   ├── vision_service.py
-│   ├── query_service.py
-│
-├── graphs/
-│   └── derma_graph.py
-│
-├── prompts/
-│
-├── scripts/
-│   └── generate_precomputed.py
-│
-└── data/
-🧠 Technologies Used
-Backend
 
-Python
+<img width="3563" height="376" alt="mermaid-diagram (3)" src="https://github.com/user-attachments/assets/473bcbf7-12fe-45bf-851d-4b02d654d306" />
 
-FastAPI
 
-AI / ML
-
-LangChain
-
-LangGraph
-
-CLIP
-
-BLIP
-
-Sentence Transformers
-
-Retrieval Systems
-
-Vector embeddings
-
-Cosine similarity search
-
-LLM Integration
-
-Ollama
-
-Prompt engineering
-
-Deployment
-
-Streamlit
-
-Render
 
 📊 Project Evolution
+
 Phase 1 — Basic LLM System
 
 Initial prototype built with FastAPI + LLM to answer skincare questions.
 
 User Query → LLM → Response
+
+
 Phase 2 — Retrieval Augmented Generation
 
 To improve answer quality, a skincare dataset from HuggingFace was embedded into a vector database.
 
 Query → Embedding → Vector Search → LLM
+
+
 Phase 3 — Multimodal AI
 
 Image understanding was introduced using vision models.
@@ -209,6 +86,8 @@ Pipeline:
 
 Skin Image → Vision Model → Image Context
 Query + Context → RAG → LLM
+
+
 Phase 4 — Query Dependency Detection
 
 Not all questions depend on the image.
@@ -223,6 +102,8 @@ Scoring mechanism:
 
 Keyword heuristics → 40%
 LLM scoring → 60%
+
+
 Phase 5 — Memory System
 
 The system stores previous interactions to reuse knowledge.
@@ -236,6 +117,8 @@ Return stored answer
 Otherwise:
 
 Generate new response → store in memory
+
+
 Phase 6 — LangGraph Workflow
 
 As the system grew complex, the pipeline was redesigned using LangGraph.
@@ -254,6 +137,7 @@ LLM generation
 
 This enabled parallel retrieval and modular orchestration.
 
+
 Phase 7 — Deployment Challenges
 
 Deployment on Render free tier failed due to heavy ML libraries:
@@ -264,6 +148,7 @@ CLIP
 
 These models required more RAM than available.
 
+
 Phase 8 — Precomputed Pipeline
 
 To solve deployment constraints, a precomputed inference pipeline was introduced.
@@ -273,6 +158,7 @@ Script used:
 generate_precomputed.py
 
 This script runs the entire AI pipeline offline and stores results.
+
 
 Phase 9 — Demo Deployment
 
@@ -289,6 +175,8 @@ Find Closest Match
 Retrieve Stored Results
    ↓
 LLM Generates Final Response
+
+
 ⚠ Limitations
 
 Small dermatology dataset
@@ -297,7 +185,9 @@ pHash similarity has limited visual accuracy
 
 Demo architecture optimized for deployment constraints
 
+
 🔮 Future Improvements
+
 Better Image Similarity
 
 Replace pHash with:
@@ -335,6 +225,7 @@ Build a frontend using:
 React
 
 Next.js
+
 
 🧑‍💻 Installation
 Clone Repository
